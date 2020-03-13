@@ -1,0 +1,11 @@
+C:\src\MageServer\MageServer\bin\Debug\netcoreapp2.1\MageServer.deps.json
+C:\src\MageServer\MageServer\bin\Debug\netcoreapp2.1\MageServer.runtimeconfig.json
+C:\src\MageServer\MageServer\bin\Debug\netcoreapp2.1\MageServer.runtimeconfig.dev.json
+C:\src\MageServer\MageServer\bin\Debug\netcoreapp2.1\MageServer.dll
+C:\src\MageServer\MageServer\bin\Debug\netcoreapp2.1\MageServer.pdb
+C:\src\MageServer\MageServer\obj\Debug\netcoreapp2.1\MageServer.csprojAssemblyReference.cache
+C:\src\MageServer\MageServer\obj\Debug\netcoreapp2.1\MageServer.csproj.CoreCompileInputs.cache
+C:\src\MageServer\MageServer\obj\Debug\netcoreapp2.1\MageServer.AssemblyInfoInputs.cache
+C:\src\MageServer\MageServer\obj\Debug\netcoreapp2.1\MageServer.AssemblyInfo.cs
+C:\src\MageServer\MageServer\obj\Debug\netcoreapp2.1\MageServer.dll
+C:\src\MageServer\MageServer\obj\Debug\netcoreapp2.1\MageServer.pdb
