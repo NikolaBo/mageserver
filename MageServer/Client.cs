@@ -25,6 +25,7 @@ namespace MageServer
 
             private readonly int id;
             private NetworkStream stream;
+            private Packet receivedData;
             private byte[] receiveBuffer;
 
             public TCP(int _id)
@@ -40,6 +41,7 @@ namespace MageServer
 
                 stream = socket.GetStream();
 
+                receivedData = new Packet();
                 receiveBuffer = new byte[dataBufferSize];
 
                 stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
@@ -75,12 +77,59 @@ namespace MageServer
                     byte[] data = new byte[byteLength];
                     Array.Copy(receiveBuffer, data, byteLength);
 
+                    receivedData.Reset(HandleData(data));
                     stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
                 }
                 catch (Exception _ex)
                 {
                     Console.WriteLine("Error receiving TCP data: " + _ex);
                 }
+            }
+
+            private bool HandleData(byte[] _data)
+            {
+                int packetLength = 0;
+
+                receivedData.SetBytes(_data);
+
+                if (receivedData.UnreadLength() >= 4)
+                {
+                    packetLength = receivedData.ReadInt();
+                    if (packetLength <= 0)
+                    {
+                        return true;
+                    }
+                }
+
+                while (packetLength > 0 && packetLength <= receivedData.UnreadLength())
+                {
+                    byte[] packetBytes = receivedData.ReadBytes(packetLength);
+                    ThreadManager.ExecuteOnMainThread(() =>
+                    {
+                        using (Packet packet = new Packet(packetBytes))
+                        {
+                            int packetId = packet.ReadInt();
+                            Server.packetHandlers[packetId](id, packet);
+                        }
+                    });
+
+                    packetLength = 0;
+                    if (receivedData.UnreadLength() >= 4)
+                    {
+                        packetLength = receivedData.ReadInt();
+                        if (packetLength <= 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                if (packetLength <= 1)
+                {
+                    return true;
+                }
+
+                return false;
             }
         }
     }

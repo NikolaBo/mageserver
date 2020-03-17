@@ -13,7 +13,7 @@ namespace MageServer
     /// <summary> Sent from client to server.</summary>
     public enum ClientPackets
     {
-        welcomRecieved = 1
+        welcomeRecieved = 1
     }
 
     public class Packet : IDisposable

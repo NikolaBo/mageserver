@@ -11,6 +11,8 @@ namespace MageServer
         public static int maxPlayers { get; private set; }
         public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
         public static int port { get; private set; }
+        public delegate void PacketHandler(int _fromClient, Packet _packet);
+        public static Dictionary<int, PacketHandler> packetHandlers;
 
         private static TcpListener tcpListener;
 
@@ -53,6 +55,13 @@ namespace MageServer
             {
                 clients.Add(i, new Client(i));
             }
+
+            packetHandlers = new Dictionary<int, PacketHandler>()
+            {
+                {(int) ClientPackets.welcomeRecieved, ServerHandle.WelcomeReceived}
+            };
+
+            Console.WriteLine("Initialized packets.");
         }
 
     }
