@@ -688,7 +688,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\s-nbojanic\\.nuget\\packages\\": {},
+    "C:\\Users\\nikolabo\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -697,14 +697,14 @@
       "projectUniqueName": "C:\\src\\MageServer\\MageServer\\MageServer.csproj",
       "projectName": "MageServer",
       "projectPath": "C:\\src\\MageServer\\MageServer\\MageServer.csproj",
-      "packagesPath": "C:\\Users\\s-nbojanic\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\nikolabo\\.nuget\\packages\\",
       "outputPath": "C:\\src\\MageServer\\MageServer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\s-nbojanic\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\nikolabo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
