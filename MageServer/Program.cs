@@ -17,7 +17,7 @@ namespace MageServer
             Thread mainThread = new Thread(new ThreadStart(MainThread));
             mainThread.Start();
 
-            Console.ReadKey();
+            //Console.ReadKey();
         }
 
         private static void MainThread()

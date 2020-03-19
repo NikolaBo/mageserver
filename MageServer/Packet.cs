@@ -7,13 +7,15 @@ namespace MageServer
     /// <summary> Sent from server to client.</summary>
     public enum ServerPackets
     {
-        welcome = 1
+        welcome = 1,
+        udpTest
     }
 
     /// <summary> Sent from client to server.</summary>
     public enum ClientPackets
     {
-        welcomeRecieved = 1
+        welcomeRecieved = 1,
+        udpTestReceived
     }
 
     public class Packet : IDisposable

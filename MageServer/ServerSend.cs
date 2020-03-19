@@ -12,6 +12,12 @@ namespace MageServer
             Server.clients[_toClient].tcp.SendData(_packet);
         }
 
+        private static void SendUDPData(int _toClient, Packet _packet)
+        {
+            _packet.WriteLength();
+            Server.clients[_toClient].udp.SendData(_packet);
+        }
+
         private static void SendTCPDataToAll(Packet _packet)
         {
             _packet.WriteLength();
@@ -24,13 +30,32 @@ namespace MageServer
         private static void SendTCPDataToAll(int _exceptClient, Packet _packet)
         {
             _packet.WriteLength();
-            for(int i = 1; i < Server.maxPlayers; i++)
+            for (int i = 1; i < Server.maxPlayers; i++)
             {
                 if (i != _exceptClient) Server.clients[i].tcp.SendData(_packet);
             }
         }
 
-        public static void Welcome (int _toClient, string _msg)
+        private static void SendUDPDataToAll(Packet _packet)
+        {
+            _packet.WriteLength();
+            for (int i = 1; i < Server.maxPlayers; i++)
+            {
+                Server.clients[i].udp.SendData(_packet);
+            }
+        }
+
+        private static void SendUDPataToAll(int _exceptClient, Packet _packet)
+        {
+            _packet.WriteLength();
+            for (int i = 1; i < Server.maxPlayers; i++)
+            {
+                if (i != _exceptClient) Server.clients[i].udp.SendData(_packet);
+            }
+        }
+
+        #region Packets
+        public static void Welcome(int _toClient, string _msg)
         {
             using (Packet packet = new Packet((int)ServerPackets.welcome))
             {
@@ -40,5 +65,16 @@ namespace MageServer
                 SendTCPData(_toClient, packet);
             }
         }
+
+        public static void UDPTest(int _toClient)
+        {
+            using (Packet packet = new Packet((int)ServerPackets.udpTest))
+            {
+                packet.Write("This is is a UDP test packet.");
+
+                SendUDPData(_toClient, packet);
+            }
+        }
+        #endregion
     }
 }
