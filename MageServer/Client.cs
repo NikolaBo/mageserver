@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Net;
+using System.Numerics;
 using System.Net.Sockets;
 
 namespace MageServer
@@ -11,6 +12,7 @@ namespace MageServer
         public static int dataBufferSize = 4096;
 
         public int id;
+        public Player player;
         public TCP tcp;
         public UDP udp;
 
@@ -62,7 +64,7 @@ namespace MageServer
                 }
                 catch (Exception _ex)
                 {
-                    Console.WriteLine("Error sending data to player " + id + "using TCP: " + _ex);
+                    Console.WriteLine("Error sending data to player " + id + " using TCP: " + _ex);
                 }
             }
 
@@ -149,7 +151,6 @@ namespace MageServer
             public void Connect(IPEndPoint _endPoint)
             {
                 endPoint = _endPoint;
-                ServerSend.UDPTest(id);
             }
 
             public void SendData(Packet _packet)
@@ -173,5 +174,25 @@ namespace MageServer
             }
         }
 
+        public void SendIntoGame(string _playerName)
+        {
+            player = new Player(id, _playerName, Vector3.Zero);
+
+            foreach(Client client in Server.clients.Values)
+            {
+                if(client.player != null && client.id != id)
+                {
+                    ServerSend.SpawnPlayer(id, client.player);
+                }
+            }
+
+            foreach(Client client in Server.clients.Values)
+            {
+                if(client.player != null)
+                {
+                    ServerSend.SpawnPlayer(client.id, player);
+                }
+            }
+        }
     }
 }

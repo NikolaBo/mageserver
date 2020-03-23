@@ -115,7 +115,7 @@ namespace MageServer
             packetHandlers = new Dictionary<int, PacketHandler>()
             {
                 {(int) ClientPackets.welcomeRecieved, ServerHandle.WelcomeReceived},
-                {(int) ClientPackets.udpTestReceived, ServerHandle.UDPTestReceived}
+                {(int) ClientPackets.playerMovement, ServerHandle.PlayerMovement }
             };
 
             Console.WriteLine("Initialized packets.");

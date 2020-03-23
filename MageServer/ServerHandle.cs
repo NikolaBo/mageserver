@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Numerics;
 
 namespace MageServer
 {
@@ -17,12 +18,19 @@ namespace MageServer
             {
                 Console.WriteLine("Player " + _username + " ID: " + _fromClient + " has assumed the wrong client ID " + _clientIdCheck + "!");
             }
+
+            Server.clients[_fromClient].SendIntoGame(_username);
         }
 
-        public static void UDPTestReceived(int _fromClient, Packet _packet)
+        public static void PlayerMovement(int _fromClient, Packet _packet)
         {
-            String msg = _packet.ReadString();
-            Console.WriteLine($"Message received from client {_fromClient} via udp: {msg}");
+            bool[] inputs = new bool[_packet.ReadInt()];
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                inputs[i] = _packet.ReadBool();
+            }
+
+            Server.clients[_fromClient].player.SetInputs(inputs);
         }
     }
 }

@@ -8,6 +8,14 @@ namespace MageServer
     {
         public static void Update()
         {
+            foreach(Client c in Server.clients.Values)
+            {
+                if(c.player != null)
+                {
+                    c.player.Update(); 
+                }
+            }
+
             ThreadManager.UpdateMain();
         }
     }
