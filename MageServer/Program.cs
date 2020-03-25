@@ -14,10 +14,9 @@ namespace MageServer
 
             Server.Start(10, 2239);
 
+            //Start the main thread
             Thread mainThread = new Thread(new ThreadStart(MainThread));
             mainThread.Start();
-
-            //Console.ReadKey();
         }
 
         private static void MainThread()
@@ -25,11 +24,12 @@ namespace MageServer
             Console.WriteLine("Main thread started. Running at " + Constants.TICKS_PER_SEC + " ticks per second.");
             DateTime nextLoop = DateTime.Now;
 
+            //Runs at constant ticks per second
             while (isRunning)
             {
                 while (nextLoop < DateTime.Now)
                 {
-                    GameLogic.Update();
+                    GameLogic.Update(); //Run the game loop
 
                     nextLoop = nextLoop.AddMilliseconds(Constants.MS_PER_TICK);
 
