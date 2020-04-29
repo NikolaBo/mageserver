@@ -86,13 +86,14 @@ namespace MageServer
             }
         }
 
-        /// <summary>Packet sent containing the player's position to all clients via UDP.</summary>
+        /// <summary>Packet sent containing the player's position and direction vector to all clients via UDP.</summary>
         public static void PlayerPosition(Player _player)
         {
             using (Packet packet = new Packet((int)ServerPackets.playerPosition))
             {
                 packet.Write(_player.id);
                 packet.Write(_player.position);
+                packet.Write(_player.direction);
 
                 SendUDPDataToAll(packet);
             }

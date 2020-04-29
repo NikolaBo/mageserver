@@ -11,6 +11,7 @@ namespace MageServer
         public string username;
 
         public Vector3 position;
+        public Vector2 direction;
         public Quaternion rotation;
 
         private float moveSpeed = 5f / Constants.TICKS_PER_SEC;
@@ -31,20 +32,17 @@ namespace MageServer
         public void Update()
         {
             //Calculate the direction of the movement vector from player inputs
-            Vector2 _inputDirection = Vector2.Zero;
-            if (inputs[0]) _inputDirection.Y += 1;
-            if (inputs[1]) _inputDirection.Y -= 1;
-            if (inputs[2]) _inputDirection.X += 1;
-            if (inputs[3]) _inputDirection.X -= 1;
+            direction = Vector2.Zero;
+            if (inputs[0]) direction.Y += 1;
+            if (inputs[1]) direction.Y -= 1;
+            if (inputs[2]) direction.X += 1;
+            if (inputs[3]) direction.X -= 1;
 
-            Move(_inputDirection); //Move in the given direction
+            Move(direction); //Move in the given direction
         }
 
         private void Move(Vector2 _direction)
         {
-            //Not needed when not synchronizing rotation
-            //Vector3 _up = Vector3.UnitY;
-            //Vector3 _right = Vector3.UnitX;
 
             Vector3 moveDirection = Vector3.UnitY * _direction.Y + Vector3.UnitX * _direction.X;
             position += moveDirection * moveSpeed;

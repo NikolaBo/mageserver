@@ -81,6 +81,7 @@ namespace MageServer
                     int byteLength = stream.EndRead(_result);
                     if (byteLength <= 0)
                     {
+                        Server.clients[id].Disconnect();
                         return; //Return out if the packet is empty
                     }
 
@@ -94,6 +95,7 @@ namespace MageServer
                 catch (Exception _ex)
                 {
                     Console.WriteLine("Error receiving TCP data: " + _ex);
+                    Server.clients[id].Disconnect();
                 }
             }
 
@@ -129,7 +131,7 @@ namespace MageServer
                     });
 
                     packetLength = 0;
-                    //If there is anothe integer in the received data
+                    //If there is another integer in the received data
                     if (receivedData.UnreadLength() >= 4)
                     {
                         packetLength = receivedData.ReadInt(); //Set the packet length
@@ -147,6 +149,16 @@ namespace MageServer
 
                 //There are incomplete packets so do not reset
                 return false;
+            }
+
+            //Disconnect method that sets all TCP class fields to null
+            public void Disconnect()
+            {
+                socket.Close();
+                stream = null;
+                receivedData = null;
+                receiveBuffer = null;
+                socket = null;
             }
         }
 
@@ -189,6 +201,12 @@ namespace MageServer
                     }
                 });
             }
+
+            //Disconnect method that sets all UDP class fields to null
+            public void Disconnect()
+            {
+                endPoint = null;
+            }
         }
 
         //Sends the client into game, called when handling welcome received packet
@@ -213,6 +231,16 @@ namespace MageServer
                     ServerSend.SpawnPlayer(client.id, player);
                 }
             }
+        }
+
+        private void Disconnect()
+        {
+            Console.WriteLine($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
+
+            player = null;
+
+            tcp.Disconnect();
+            udp.Disconnect();
         }
     }
 }
